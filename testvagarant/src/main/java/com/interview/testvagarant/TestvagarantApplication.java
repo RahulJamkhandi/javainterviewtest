@@ -43,36 +43,49 @@ public class TestvagarantApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(TestvagarantApplication.class, args);
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		System.out.println("The team results are : ");
-		teams.forEach(e -> System.out.println(e));
-		System.out.println("--------------------------------------------------------------");
-		System.out.println("-----Sample Output 1 -----------------------------------------");
-		System.out.println("--------------------------------------------------------------");
+		System.out.println("-----------------------------------------------------------------------");
+		System.out.println("Teams\t:\tPoints\t:\tLast Five Matches");
+		System.out.println("-----------------------------------------------------------------------");
+		teams.forEach(e -> {
+			System.out.print(e.getTeamName() + "\t:\t" + e.getPoints() + "\t:\t");
+			e.getResults().forEach(r -> System.out.print(r + "\t"));
+			System.out.println();
+		});
+		System.out.println("-----------------------------------------------------------------------");
+		System.out.println("-----Sample Output 1 --------------------------------------------------");
+		System.out.println("-----------------------------------------------------------------------");
 		System.out.println("The two Consecutively losing teams are ");
 		int avg = 0;
 		List<Team> twoConsecutiveLosingTeam = getConsecutiveWinnigOrLosingTeam(false, 2);
-		for (Team t : twoConsecutiveLosingTeam) {
-			System.out.println("\t" + t);
-			avg += t.getPoints();
+		System.out.println("Teams\t:\tPoints\t:\tLast Five Matches");
+		System.out.println("-----------------------------------------------------------------------");
+		for (Team e : twoConsecutiveLosingTeam) {
+			System.out.print(e.getTeamName() + "\t:\t" + e.getPoints() + "\t:\t");
+			e.getResults().forEach(r -> System.out.print(r + "\t"));
+			System.out.println();
+			avg += e.getPoints();
 		}
 		System.out.println("The average points are : " + avg / twoConsecutiveLosingTeam.size());
-		System.out.println("--------------------------------------------------------------");
-		System.out.println("-----Sample Output 2 -----------------------------------------");
-		System.out.println("--------------------------------------------------------------");
+		System.out.println("-----------------------------------------------------------------------");
+		System.out.println("-----Sample Output 2 --------------------------------------------------");
+		System.out.println("-----------------------------------------------------------------------");
 		System.out.println("The Three Consecutively winning teams are ");
 		avg = 0;
 		List<Team> twoConsecutiveWinnigTeam = getConsecutiveWinnigOrLosingTeam(true, 2);
-		for (Team t : twoConsecutiveWinnigTeam) {
-			System.out.println("\t" + t);
-			avg += t.getPoints();
+		for (Team e : twoConsecutiveWinnigTeam) {
+			System.out.print(e.getTeamName() + "\t:\t" + e.getPoints() + "\t:\t");
+			e.getResults().forEach(r -> System.out.print(r + "\t"));
+			System.out.println();
+			avg += e.getPoints();
 		}
 		System.out.println("The average points are : " + avg / twoConsecutiveWinnigTeam.size());
 
-		System.out.println("--------------------------------------------------------------------");
 		// dynamic output
-		System.out.println("--------------------------------------------------------------");
-		System.out.println("-----Dynamic Output  -----------------------------------------");
-		System.out.println("--------------------------------------------------------------");
+		System.out.println("-----------------------------------------------------------------------");
+		System.out.println("-----Dynamic Output  --------------------------------------------------");
+		System.out.println("-----------------------------------------------------------------------");
 		try {
 			Scanner scanner = new Scanner(System.in);
 			System.out.println("Enter the number of match count ot be considered as consecutive [ 1 <= N <=5 ]:");
@@ -85,15 +98,17 @@ public class TestvagarantApplication {
 
 			System.out.println("The " + count + " Consecutively " + result + "ing teams are ");
 			avg = 0;
-			if (!result.equalsIgnoreCase("WIN")  || !result.equalsIgnoreCase("LOSE")) {
+			if (!result.equalsIgnoreCase("WIN") || !result.equalsIgnoreCase("LOSE")) {
 				throw new InvalidAttributesException("number of win/loss count cannot be validated");
 			}
-			List<Team> Consecutive = getConsecutiveWinnigOrLosingTeam(result.equalsIgnoreCase("WIN"), count);
-			for (Team t : Consecutive) {
-				System.out.println("\t" + t);
-				avg += t.getPoints();
+			List<Team> consecutive = getConsecutiveWinnigOrLosingTeam(result.equalsIgnoreCase("WIN"), count);
+			for (Team e : consecutive) {
+				System.out.print(e.getTeamName() + "\t:\t" + e.getPoints() + "\t:\t");
+				e.getResults().forEach(r -> System.out.print(r + "\t"));
+				System.out.println();
+				avg += e.getPoints();
 			}
-			System.out.println("The average points are : " + avg / Consecutive.size());
+			System.out.println("The average points are : " + avg / consecutive.size());
 		} catch (Exception e) {
 			System.err.println("Please Enter Proper values :" + e.getMessage());
 		}
