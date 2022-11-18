@@ -72,6 +72,8 @@ public class TestvagarantApplication {
 		System.out.println("-----Sample Output 2 --------------------------------------------------");
 		System.out.println("-----------------------------------------------------------------------");
 		System.out.println("The Three Consecutively winning teams are ");
+		System.out.println("Teams\t:\tPoints\t:\tLast Five Matches");
+		System.out.println("-----------------------------------------------------------------------");
 		avg = 0;
 		List<Team> twoConsecutiveWinnigTeam = getConsecutiveWinnigOrLosingTeam(true, 2);
 		for (Team e : twoConsecutiveWinnigTeam) {
@@ -88,19 +90,22 @@ public class TestvagarantApplication {
 		System.out.println("-----------------------------------------------------------------------");
 		try {
 			Scanner scanner = new Scanner(System.in);
-			System.out.println("Enter the number of match count ot be considered as consecutive [ 1 <= N <=5 ]:");
+			System.out.println("Enter the number of match count to be considered as consecutive [ 2 <= N <=5 ]:");
 			Integer count = Integer.parseInt(scanner.nextLine());
-			if (count <= 0 || count > 5) {
+			if (count <= 1 || count > 5) {
 				throw new InvalidAttributesException("number of win/loss count cannot be validated");
 			}
 			System.out.println("Enter the match result [Can be win or lose]");
 			String result = scanner.nextLine().toUpperCase();
 
-			System.out.println("The " + count + " Consecutively " + result + "ing teams are ");
 			avg = 0;
-			if (!result.equalsIgnoreCase("WIN") || !result.equalsIgnoreCase("LOSE")) {
+			if (!(result.equalsIgnoreCase("WIN") || result.equalsIgnoreCase("LOSE"))) {
 				throw new InvalidAttributesException("number of win/loss count cannot be validated");
 			}
+			System.out.println("The " + count + " Consecutively "
+					+ (result.equalsIgnoreCase("WIN") ? "Winning" : "Losing") + " teams are ");
+			System.out.println("Teams\t:\tPoints\t:\tLast Five Matches");
+			System.out.println("-----------------------------------------------------------------------");
 			List<Team> consecutive = getConsecutiveWinnigOrLosingTeam(result.equalsIgnoreCase("WIN"), count);
 			for (Team e : consecutive) {
 				System.out.print(e.getTeamName() + "\t:\t" + e.getPoints() + "\t:\t");
